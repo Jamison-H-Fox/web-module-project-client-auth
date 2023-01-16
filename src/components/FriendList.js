@@ -13,7 +13,6 @@ function FriendList() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        console.log(token)
         axios.get('http://localhost:9000/api/friends', {
             headers: {
                 authorization: token,

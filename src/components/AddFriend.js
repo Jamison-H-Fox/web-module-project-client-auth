@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const StyledDiv = styled.div`
     & * {
@@ -8,23 +10,74 @@ const StyledDiv = styled.div`
 `
 
 function AddFriend() {
+    const { push } = useHistory();
+    const[form, setForm] = useState({
+        name: '',
+        age: '',
+        email: ''
+    })
 
+    const handleChange = (evt) => {
+        setForm({
+            ...form,
+            [evt.target.name]: evt.target.value
+        })
+    }
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        const token = localStorage.getItem('token');
+        axios.post('http://localhost:9000/api/friends', form, {
+            headers: {
+                authorization: token
+            }
+        })
+            .then(res => {
+                push('/friends');
+                setForm({
+                    name: '',
+                    age: '',
+                    email: ''
+                })
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
 
     return(
         <StyledDiv>
             <h1>Add Friend</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Name: </label>
-                    <input id='name' type='text'></input>
+                    <input
+                        onChange={handleChange}
+                        id='name' 
+                        type='text'
+                        name='name'
+                        value={form.name}
+                    ></input>
                 </div>
                 <div>
                     <label htmlFor="age">Age: </label>
-                    <input id='age' type='text'></input>
+                    <input
+                        onChange={handleChange}
+                        id='age' 
+                        type='text'
+                        name='age'
+                        value={form.age}
+                    ></input>
                 </div>
                 <div>
                     <label htmlFor="email">Email: </label>
-                    <input id='email' type='text'></input>
+                    <input
+                        onChange={handleChange}
+                        id='email' 
+                        type='text'
+                        name='email'
+                        value={form.email}
+                    ></input>
                 </div>
                 <button>Submit</button>
             </form>
