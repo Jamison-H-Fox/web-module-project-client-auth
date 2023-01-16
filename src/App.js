@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import FriendList from './components/FriendList';
 import AddFriend from './components/AddFriend';
 import NavBar from './components/NavBar';
@@ -16,7 +17,9 @@ function App() {
       <Route exact path='/login'>
         <Redirect to='/' />
       </Route>
-
+      <Route exact path='/logout'>
+        <Logout />
+      </Route>
       <Route exact path='/friends'>
         <FriendList />
       </Route>

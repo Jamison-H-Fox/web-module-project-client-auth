@@ -6,7 +6,7 @@ const StyledNav = styled.nav`
     // border: red 1px solid;
     width: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding-left: 50%;
 
     & * {
@@ -20,13 +20,21 @@ const StyledNav = styled.nav`
 `
 
 function NavBar() {
+    const token = localStorage.getItem('token');
 
     return(
         <StyledNav className="navbar">
-            <Link className="link" to='/login'>Login</Link>
-            <Link className="link" to='/friends'>Friend List</Link>
-            <Link className="link" to='/friends/add'>Add Friend</Link>
-            <Link className="link" to='/friends'>Login</Link>
+            {
+                token 
+                    ? 
+                    <>
+                    <Link className="link" to='/friends'>Friend List</Link>
+                    <Link className="link" to='/friends/add'>Add Friend</Link>
+                    <Link className="link" to='/logout'>Log Out</Link>
+                    </>
+                    :
+                    <Link className="link" to='/login'>Log In</Link>
+            }
         </StyledNav>
     )
 }
