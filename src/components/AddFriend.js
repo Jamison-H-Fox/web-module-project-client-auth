@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 const StyledDiv = styled.div`
     & * {
@@ -26,12 +26,7 @@ function AddFriend() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        const token = localStorage.getItem('token');
-        axios.post('http://localhost:9000/api/friends', form, {
-            headers: {
-                authorization: token
-            }
-        })
+        axiosWithAuth().post('/friends', form)
             .then(res => {
                 push('/friends');
                 setForm({

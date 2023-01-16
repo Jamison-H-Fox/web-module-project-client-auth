@@ -1,7 +1,7 @@
 import React , { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 const StyledDiv = styled.div`
     & * {
@@ -25,7 +25,7 @@ function Login() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        axios.post("http://localhost:9000/api/login", cred)
+        axiosWithAuth().post("/login", cred)
             .then(res => {
                 localStorage.setItem('token', res.data.token);
                 push('/friends');

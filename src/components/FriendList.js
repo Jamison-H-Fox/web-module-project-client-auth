@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 const StyledDiv = styled.div`
     & * {
@@ -12,12 +12,7 @@ function FriendList() {
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        axios.get('http://localhost:9000/api/friends', {
-            headers: {
-                authorization: token,
-            }
-        })
+        axiosWithAuth().get('/friends')
             .then(res => {
                 setFriends(res.data)
             })

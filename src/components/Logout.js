@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -24,12 +24,7 @@ const StyledDiv = styled.div`
 function Logout() {
     const { push } = useHistory();
     const handleLogout = () => {
-        const token = localStorage.getItem('token')
-        axios.post('http://localhost:9000/api/logout', {}, {
-            headers: {
-                authorization: token
-            }
-        })
+        axiosWithAuth().post('/logout', {})
             .then(res => {
                 localStorage.removeItem('token');
                 push('/login');
